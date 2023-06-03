@@ -1,46 +1,33 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="admin")
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    int adminId;
 
-    private String username;
+    private String userName;
 
     private String password;
 
-    @OneToMany(mappedBy = "admin",cascade = CascadeType.ALL)
-    List<ServiceProvider> serviceProvider = new ArrayList<>();
-
-    public Admin() {
+    public int getAdminId() {
+        return adminId;
     }
 
-    public Admin(int id, String username, String password, List<ServiceProvider> serviceProvider) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.serviceProvider = serviceProvider;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
-    public int getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -51,11 +38,18 @@ public class Admin {
         this.password = password;
     }
 
-    public List<ServiceProvider> getServiceProvider() {
-        return serviceProvider;
+    public List<ServiceProvider> getServiceProviders() {
+        return serviceProviders;
     }
 
-    public void setServiceProvider(List<ServiceProvider> serviceProvider) {
-        this.serviceProvider = serviceProvider;
+    public void setServiceProviders(List<ServiceProvider> serviceProviders) {
+        this.serviceProviders = serviceProviders;
     }
+
+    public Admin() {
+    }
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private List<ServiceProvider> serviceProviders;
+
 }
