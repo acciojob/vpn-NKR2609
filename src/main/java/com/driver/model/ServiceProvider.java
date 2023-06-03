@@ -1,42 +1,33 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ServiceProvider {
+@Table(name = "serviceProvider")
+public class ServiceProvider
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
-
     @ManyToOne
     @JoinColumn
-    Admin admin;
+    private Admin admin;
 
     @ManyToMany(mappedBy = "serviceProviderList",cascade = CascadeType.ALL)
-    List<User> user = new ArrayList<>();
+    private List<User> users;
+    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    private List<Country> countryList;
 
     @OneToMany(mappedBy = "serviceProvider",cascade = CascadeType.ALL)
-    List<Connection> connectionList = new ArrayList<>();
+    private List<Connection> connectionList ;
 
-    @OneToMany(mappedBy = "serviceProvider",cascade = CascadeType.ALL)
-    List<Country> countryList = new ArrayList<>();
-
+    //constructor
     public ServiceProvider() {
     }
 
-    public ServiceProvider(int id, String name, Admin admin, List<User> user, List<Connection> connectionList, List<Country> countryList) {
-        this.id = id;
-        this.name = name;
-        this.admin = admin;
-        this.user = user;
-        this.connectionList = connectionList;
-        this.countryList = countryList;
-    }
-
+    //getters setters
     public int getId() {
         return id;
     }
@@ -61,20 +52,12 @@ public class ServiceProvider {
         this.admin = admin;
     }
 
-    public List<User> getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(List<User> userList) {
-        this.user = user;
-    }
-
-    public List<Connection> getConnectionList() {
-        return connectionList;
-    }
-
-    public void setConnectionList(List<Connection> connectionList) {
-        this.connectionList = connectionList;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<Country> getCountryList() {
@@ -83,5 +66,13 @@ public class ServiceProvider {
 
     public void setCountryList(List<Country> countryList) {
         this.countryList = countryList;
+    }
+
+    public List<Connection> getConnectionList() {
+        return connectionList;
+    }
+
+    public void setConnectionList(List<Connection> connectionList) {
+        this.connectionList = connectionList;
     }
 }
